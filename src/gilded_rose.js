@@ -4,6 +4,73 @@ class Item {
     this.sellIn = sellIn;
     this.quality = quality;
   }
+  
+  updateQuality(){
+    this.sellIn--
+    if (this.quality>0) {
+      this.quality--
+    }
+  }
+
+}
+
+class Vest extends Item{
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality)
+  }
+}
+
+class Agedbrie extends Item{
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality)
+  }
+  updateQuality(){
+    this.sellIn--
+    if(this.quality<50){
+        this.quality++
+    }
+  }
+}
+
+class Elixir extends Item{
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality)
+  }
+}
+
+class Sulfuras extends Item{ // pas de date de peremption
+  constructor(name, sellIn){
+    super(name, sellIn, 80)
+  }
+  updateQuality(){
+    this.sellIn--
+  }
+}
+
+class BackstagePasses extends Item{
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality)
+    this.peremption = 0
+  }
+  updateQuality(){
+    this.sellIn--
+    if(this.quality < 50){
+      switch (true) {
+        case (this.sellIn <= this.peremption):
+          this.quality = 0
+          break;
+        case (this.sellIn <= 5):
+          this.quality += 3
+          break;
+        case (this.sellIn <= 10):
+          this.quality += 2
+          break;
+        default:
+          this.quality++
+          break;
+      }
+    }
+  }
 }
 
 class Shop {
@@ -11,57 +78,17 @@ class Shop {
     this.items = items;
   }
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1;
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1;
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-          }
-        }
-      }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].quality = this.items[i].quality - 1;
-              }
-            }
-          } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality;
-          }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
-          }
-        }
-      }
-    }
-
-    return this.items;
+    this.items.forEach(item => item.updateQuality())
+    return this.items
   }
 }
 
 module.exports = {
   Item,
+  Vest,
+  Agedbrie,
+  Elixir,
+  Sulfuras,
+  BackstagePasses,
   Shop
 }
