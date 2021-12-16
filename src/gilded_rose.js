@@ -27,10 +27,16 @@ class Agedbrie extends Item{
   updateQuality(){
     this.sellIn--
     if(this.quality<50){
+      if (this.sellIn < 0) {
+        this.quality += 2
+      }
+      else {
         this.quality++
+      }
     }
   }
 }
+
 
 class Elixir extends Item{
   constructor(name, sellIn, quality){
@@ -43,7 +49,7 @@ class Sulfuras extends Item{ // pas de date de peremption
     super(name, sellIn, 80)
   }
   updateQuality(){
-    this.sellIn--
+    this.sellIn = this.sellIn // voir pour faire mieux
   }
 }
 
@@ -55,20 +61,23 @@ class BackstagePasses extends Item{
   updateQuality(){
     this.sellIn--
     if(this.quality < 50){
-      switch (true) {
-        case (this.sellIn <= this.peremption):
-          this.quality = 0
-          break;
-        case (this.sellIn <= 5):
-          this.quality += 3
-          break;
-        case (this.sellIn <= 10):
-          this.quality += 2
-          break;
-        default:
-          this.quality++
-          break;
+
+      if (this.sellIn <= this.peremption){
+        this.quality = 0
       }
+      else if(this.sellIn <= 5){
+        this.quality += 3
+      } 
+      else if(this.sellIn <= 10){
+        this.quality+= 2
+      }
+      else{
+        this.quality++
+      }
+
+    }
+    if (this.quality > 50 ) {
+      this.quality = 50
     }
   }
 }
