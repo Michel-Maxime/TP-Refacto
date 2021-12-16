@@ -1,5 +1,5 @@
 
-const { Shop, Item, Vest, Agedbrie, Elixir, Sulfuras, BackstagePasses } = require("../src/gilded_rose");
+const { Shop, Item, Vest, Agedbrie, Elixir, Sulfuras, BackstagePasses, Conjured } = require("../src/gilded_rose");
 
 const items = [
   new Vest("+5 Dexterity Vest", 10, 20),
@@ -12,7 +12,7 @@ const items = [
   new BackstagePasses("Backstage passes to a TAFKAL80ETC concert", 5, 49),
 
   // This Conjured item does not work properly yet
-  new Item("Conjured Mana Cake", 3, 6),
+  new Conjured("Conjured Mana Cake", 3, 6),
 ];
 
 const days = Number(process.argv[2]) || 5;
