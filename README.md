@@ -10,7 +10,7 @@
 
 3.  Ajouter l'objet "Conjured" (comparer avec filet de test)
 
-4. Rédaction des tests
+4. Rédaction des tests unitaires
 
 # Gilded Rose
 
