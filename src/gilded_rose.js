@@ -1,3 +1,6 @@
+const limitMaxQuality = 50
+const limitMinQuality = 0
+
 class Item {
   constructor(name, sellIn, quality){
     this.name = name;
@@ -5,7 +8,16 @@ class Item {
     this.quality = quality;
   }
   updateQuality(){}
-
+  
+  GetQualityWithLimits(number){
+    if((this.quality + number) <= limitMaxQuality && (this.quality + number) >= limitMinQuality){
+      return this.quality + number
+    }
+    else if((this.quality + number) > limitMaxQuality){
+      return limitMaxQuality
+    }
+    return limitMinQuality
+  }
 }
 
 class Vest extends Item{
@@ -14,7 +26,7 @@ class Vest extends Item{
   }
   updateQuality() {
     this.sellIn--
-    if (this.quality>0) {
+    if (this.quality>limitMinQuality) {
       this.quality--
     }
   }
@@ -26,9 +38,9 @@ class Agedbrie extends Item{
   }
   updateQuality(){
     this.sellIn--
-    if(this.quality<50){
+    if(this.quality < limitMaxQuality){
       if (this.sellIn < 0) {
-        this.quality += 2
+        this.quality = this.GetQualityWithLimits(2)
       }
       else {
         this.quality++
@@ -43,7 +55,7 @@ class Elixir extends Item{
   }
   updateQuality() {
     this.sellIn--
-    if (this.quality>0) {
+    if (this.quality> limitMinQuality) {
       this.quality--
     }
   }
@@ -62,23 +74,19 @@ class BackstagePasses extends Item{
   }
   updateQuality(){
     this.sellIn--
-    if(this.quality < 50){
-
+    if(this.quality < limitMaxQuality){
       if (this.sellIn <= this.peremption){
-        this.quality = 0
+        this.quality = limitMinQuality
       }
       else if(this.sellIn <= 5){
-        this.quality += 3
+        this.quality = this.GetQualityWithLimits(3)
       } 
       else if(this.sellIn <= 10){
-        this.quality+= 2
+        this.quality = this.GetQualityWithLimits(2)
       }
       else{
         this.quality++
       }
-    }
-    if (this.quality > 50 ) {
-      this.quality = 50
     }
   }
 }
@@ -89,8 +97,8 @@ class Conjured extends Item{
   }
   updateQuality(){
     this.sellIn--
-    if (this.quality > 0) {
-      this.quality -= 2
+    if (this.quality > limitMinQuality) {
+      this.quality = this.GetQualityWithLimits(-2)
     }
   }
 }
@@ -106,6 +114,7 @@ class Shop {
 }
 
 module.exports = {
+  Item,
   Vest,
   Agedbrie,
   Elixir,
