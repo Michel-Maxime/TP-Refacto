@@ -1,5 +1,4 @@
-
-const { Shop, Item, Vest, Agedbrie, Elixir, Sulfuras, BackstagePasses, Conjured } = require("../src/gilded_rose");
+const { Shop, Vest, Agedbrie, Elixir, Sulfuras, BackstagePasses, Conjured } = require("../src/gilded_rose");
 
 const items = [
   new Vest("+5 Dexterity Vest", 10, 20),

@@ -4,19 +4,19 @@ class Item {
     this.sellIn = sellIn;
     this.quality = quality;
   }
-  
-  updateQuality(){
-    this.sellIn--
-    if (this.quality>0) {
-      this.quality--
-    }
-  }
+  updateQuality(){}
 
 }
 
 class Vest extends Item{
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
+  }
+  updateQuality() {
+    this.sellIn--
+    if (this.quality>0) {
+      this.quality--
+    }
   }
 }
 
@@ -37,19 +37,21 @@ class Agedbrie extends Item{
   }
 }
 
-
 class Elixir extends Item{
   constructor(name, sellIn, quality){
     super(name, sellIn, quality)
   }
+  updateQuality() {
+    this.sellIn--
+    if (this.quality>0) {
+      this.quality--
+    }
+  }
 }
 
-class Sulfuras extends Item{ // pas de date de peremption
+class Sulfuras extends Item{
   constructor(name, sellIn){
     super(name, sellIn, 80)
-  }
-  updateQuality(){
-    this.sellIn = this.sellIn // voir pour faire mieux
   }
 }
 
@@ -74,7 +76,6 @@ class BackstagePasses extends Item{
       else{
         this.quality++
       }
-
     }
     if (this.quality > 50 ) {
       this.quality = 50
@@ -105,7 +106,6 @@ class Shop {
 }
 
 module.exports = {
-  Item,
   Vest,
   Agedbrie,
   Elixir,
